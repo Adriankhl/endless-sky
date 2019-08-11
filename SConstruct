@@ -36,11 +36,14 @@ env.Append(LIBS = [
 	"SDL2",
 	"png",
 	"jpeg",
-	"GL",
-	"GLEW",
+	"opengl32",
+	"glew32",
 	"openal",
-	"pthread"
+	"pthread",
+	"wsock32",
+	"winmm"
 ]);
+env.Append(LINKFLAGS = "-I/mingw64/include/SDL2 -Dmain=SDL_main -L/mingw64/lib -lmingw32 -lSDL2main -lSDL2 -mwindows")
 # libmad is not in the Steam runtime, so link it statically:
 if 'SCHROOT_CHROOT_NAME' in os.environ and 'steamrt_scout_i386' in os.environ['SCHROOT_CHROOT_NAME']:
 	env.Append(LIBS = File("/usr/lib/i386-linux-gnu/libmad.a"))
