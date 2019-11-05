@@ -32,15 +32,29 @@ if env["mode"] == "profile":
 # Required build flags. If you want to use SSE optimization, you can turn on
 # -msse3 or (if just building for your own computer) -march=native.
 env.Append(CCFLAGS = flags)
-env.Append(LIBS = [
-	"SDL2",
-	"png",
-	"jpeg",
-	"GL",
-	"GLEW",
-	"openal",
-	"pthread"
-]);
+if env["PLATFORM"] == "win32":
+	env.Append(LIBS = [
+		"SDL2",
+		"png",
+		"jpeg",
+		"opengl32",
+		"glew32",
+		"openal",
+		"pthread",
+		"wsock32",
+		"winmm"
+	])
+	env.Append(LINKFLAGS = "-I/mingw64/include/SDL2 -Dmain=SDL_main -L/mingw64/lib -lmingw32 -lSDL2main -lSDL2 -mwindows")
+else:
+	env.Append(LIBS = [
+                "SDL2",
+                "png",
+                "jpeg",
+                "GL",
+                "GLEW",
+                "openal",
+                "pthread"
+        ])
 # libmad is not in the Steam runtime, so link it statically:
 if 'SCHROOT_CHROOT_NAME' in os.environ and 'steamrt_scout_i386' in os.environ['SCHROOT_CHROOT_NAME']:
 	env.Append(LIBS = File("/usr/lib/i386-linux-gnu/libmad.a"))
