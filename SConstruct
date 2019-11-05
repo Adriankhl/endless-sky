@@ -32,7 +32,7 @@ if env["mode"] == "profile":
 # Required build flags. If you want to use SSE optimization, you can turn on
 # -msse3 or (if just building for your own computer) -march=native.
 env.Append(CCFLAGS = flags)
-if env["PLATFORM"] == "win32":
+if env["PLATFORM"] == "msys":
 	env.Append(LIBS = [
 		"SDL2",
 		"png",
